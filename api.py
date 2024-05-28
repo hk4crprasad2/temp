@@ -7,12 +7,12 @@ app = FastAPI()
 
 @app.get("/run-command")
 async def run_command(ip: str, port: int, time: int):
-    command = f"./bgmi {ip} {port} {time} 200"
+    command = f"bgmi {ip} {port} {time} 200"
 
     # Check how many instances of the process are already running
     count = 0
     for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
-        if proc.info['name'] == 'bgmi' or (proc.info['cmdline'] and './bgmi' in proc.info['cmdline']):
+        if proc.info['name'] == 'bgmi' or (proc.info['cmdline'] and 'bgmi' in proc.info['cmdline']):
             count += 1
 
     if count >= 14:
